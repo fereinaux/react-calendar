@@ -1,0 +1,48 @@
+.reminder-panel {
+  width: 500px;
+  margin: 20px;
+  color: white
+}
+
+.reminder-panel h2 {
+  color: white;
+}
+
+.reminder-panel .fields {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.reminder-panel label {
+  margin-top: 10px;
+}
+
+.reminder-panel .button {
+  margin: auto;
+}
+
+.reminder-panel .buttons-panel {
+  margin-top: 20px;
+  display: flex;
+}
+
+.reminder-panel .save-button {
+  background-color: #14a756;
+  border: 1px solid #14a756;
+}
+
+.reminder-panel .save-button:hover {
+  background-color: #0e522d;
+  border: 1px solid #0e522d;
+}
+
+.reminder-panel .delete-button {
+  background-color: #e43131;
+  border: 1px solid #e43131;
+}
+
+.reminder-panel .delete-button:hover {
+  background-color: #a11e1e;
+  border: 1px solid #a11e1e;
+}

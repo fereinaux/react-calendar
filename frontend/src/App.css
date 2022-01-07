@@ -1,0 +1,28 @@
+#root {
+  display: flex;
+  width: 100%;
+  padding-top: 20px;
+  flex-direction: column;
+}
+
+
+button.button {
+  background-color: #555454;
+  border: 1px solid #555454;
+  color: white;
+  border-radius: 5px;
+  font-size: 15px;
+  padding: 5px;
+  width: 150px;
+  margin: 20px 20px 0 0;
+  cursor: pointer;
+}
+
+button.button:hover {
+  background-color: #2e2c2c;
+  border: 1px solid #2e2c2c;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
