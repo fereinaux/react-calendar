@@ -87,25 +87,21 @@
   position: relative;
 }
 
-.month-day span.overlay {
-  color: white;
-  font-weight: 900;
-  font-size: 150px;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  top: -40px;
-  height: auto;
-  opacity: 0;
-}
-
-.month-day span.day-of-month {
+.month-day span.day-of-month  {
   color: rgb(165, 63, 63);
   font-weight: 800;
   position: absolute;
   left: 10px;
   top: 10px;
 }
+
+.month-day .delete-day {
+  cursor: pointer;
+  position: absolute;
+  left: 10px;
+  top: 30px;
+}
+
 
 .month-day.weekend  span {
   color: rgb(23, 69, 112);

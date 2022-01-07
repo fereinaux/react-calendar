@@ -4,10 +4,11 @@ import './calendar.css'
 import {
   useNavigate
 } from "react-router-dom";
-import { useSelector } from 'react-redux'
-import { Sun, Umbrella, CloudRain, CloudLightning, CloudSnow } from 'react-feather';
+import { useDispatch, useSelector } from 'react-redux'
+import { Sun, Umbrella, CloudRain, CloudLightning, CloudSnow, Trash2 } from 'react-feather';
 
 function Calendar() {
+  const dispatch = useDispatch()
   const navigate = useNavigate();
   let reminders = useSelector(state => state)
   const [month, setMonth] = useState(moment(new Date()).month());
@@ -32,34 +33,44 @@ function Calendar() {
       case 'cloud':
       case 'cloudly_day':
       case 'cloudly_night':
-        return <CloudRain size={12}/>
+        return <CloudRain size={12} />
       case 'storm':
-        return <CloudLightning size={12}/>
+        return <CloudLightning size={12} />
       case 'snow':
       case 'hail':
-        return <CloudSnow size={12}/>
+        return <CloudSnow size={12} />
       case 'rain':
       case 'fog':
-        return <Umbrella size={12}/>
+        return <Umbrella size={12} />
       case 'clear_day':
       case 'clear_night':
-        return <Sun size={12}/>
+        return <Sun size={12} />
       default:
-       break
+        break
     }
   }
 
   function handleReminders(day) {
-    return reminders
+    let filteredReminders = reminders
       .filter(reminder => reminder.date.format('YYYY-MM-DD') == day.format('YYYY-MM-DD'))
-      .map(reminder => {
-        return <li className='reminder'>
-          <span onClick={() => navigate(`/reminder/${reminder.id}`)} style={{ backgroundColor: reminder.color.hex }}>
-           {reminder.title} {getIcon(reminder.forecast)}
-          </span>
-        </li>
+    return <React.Fragment>
+      {
+
+        filteredReminders
+          .map(reminder => {
+            return <li className='reminder'>
+              <span onClick={() => navigate(`/reminder/${reminder.id}`)} style={{ backgroundColor: reminder.color.hex }}>
+                {reminder.title} {getIcon(reminder.forecast)}
+              </span>
+            </li>
+          })
       }
-      )
+      {
+        filteredReminders.length > 0 && <Trash2 color="brown" size={15} className='delete-day' onClick={() => dispatch({
+          type: 'DELETEBYDAY', param: day
+        })} />
+      }
+    </React.Fragment>
   }
   function getDaysOfMonth(month) {
     if (daysInMonth > 0) {

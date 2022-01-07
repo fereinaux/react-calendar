@@ -7,29 +7,14 @@ import reportWebVitals from './reportWebVitals';
 import { Provider, useSelector, useDispatch } from 'react-redux'
 import { createStore } from 'redux';
 
-function sortState(state){
-  return state.sort((a,b) => {
+function sortState(state) {
+  return state.sort((a, b) => {
 
-    return moment(a.time).format('HHmm') - moment(b.time).format('HHmm')} )
+    return moment(a.time).format('HHmm') - moment(b.time).format('HHmm')
+  })
 }
 
-function reducer(state = [{
-  date:  moment(new Date()).add(2, 'd'),
-  time:  moment(new Date()).add(2, 'd'),
-  color: {hex:'#12aa45'},
-  title: 'Meeting',
-  city:'Recife',
-  id: '4324',
-  forecast: 'storm'
-},
-{
-  date: moment(new Date()).add(-25, 'd'),
-  time: moment(new Date()).add(-25, 'd'),
-  color: {hex:'#124a45'},
-  title: 'Another One',
-  city:'Toronto',
-  id: '543'
-}], action) {
+function reducer(state = [], action) {
   let param = action.param;
   switch (action.type) {
     case 'EDIT':
@@ -43,6 +28,8 @@ function reducer(state = [{
       let removeIndex = state.findIndex(reminder => reminder.id == param)
       state.splice(removeIndex, 1)
       return sortState(state)
+    case 'DELETEBYDAY':      
+      return sortState(state.filter(reminder => reminder.date.format('YYYYMMDD') != param.format('YYYYMMDD')))
     default:
       return sortState(state)
   }
