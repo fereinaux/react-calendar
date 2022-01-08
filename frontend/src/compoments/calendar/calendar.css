@@ -80,6 +80,7 @@
 }
 
 .month-day {
+  overflow: auto;
   background-color: burlywood;
   border-bottom: solid 4px white;
   width: 100%;
