@@ -42,6 +42,15 @@ button.button:hover {
   border: 1px solid #2e2c2c;
 }
 
+button.button:disabled {
+  background-color: #a59d9d;
+  border: 1px solid #a59d9d;
+}
+
 .cursor-pointer {
   cursor: pointer;
+}
+
+.error-field {
+  background-color: rgb(194, 127, 127) !important;
 }

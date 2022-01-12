@@ -4,11 +4,13 @@
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.1",
-    "@testing-library/react": "^12.1.2",
-    "@testing-library/user-event": "^13.5.0",
     "antd": "^4.18.2",
     "axios": "^0.24.0",
+    "babel-jest": "^21.2.0",
+    "dotenv": "^11.0.0",
     "feather-icons": "^4.28.0",
+    "jest": "^21.2.1",
+    "jest-cli": "^21.2.1",
     "react": "^17.0.2",
     "react-color": "^2.19.3",
     "react-day-picker": "^7.4.10",
@@ -42,5 +44,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "enzyme": "^2.9.1",
+    "enzyme-adapter-react-16": "^1.15.6",
+    "jest-watch-typeahead": "^0.6.5"
   }
 }

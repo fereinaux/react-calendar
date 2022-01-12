@@ -46,3 +46,18 @@
   background-color: #a11e1e;
   border: 1px solid #a11e1e;
 }
+
+
+.reminder-panel .delete-button:disabled {
+  background-color: #e78e8e;
+  border: 1px solid #e78e8e;
+}
+
+
+
+.reminder-panel .save-button:disabled {
+  background-color: #77dda5;
+  border: 1px solid #77dda5;
+}
+
+

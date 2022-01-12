@@ -10,6 +10,7 @@ import {
 import { SketchPicker } from 'react-color'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios';
+import { checkReminder, getReminder } from './functions'
 
 const Reminder = () => {
   const format = 'HH:mm';
@@ -24,7 +25,9 @@ const Reminder = () => {
   const [city, setCity] = useState('');
   const [color, setColor] = useState({ hex: '#a52a2a' });
   const [time, setTime] = useState(moment(new Date(), format));
-  const [forecast, setForecast] = useState('');
+  const [weather, setWeather] = useState('');
+  const [errors, setErrors] = useState([]);
+  const [buttonEnabled, setButtonEnabled] = useState(true);
 
   useEffect(() => {
     setReminder(reminders.find(reminder => reminder.id == id))
@@ -37,45 +40,51 @@ const Reminder = () => {
       setCity(reminder.city)
       setColor(reminder.color)
       setTime(moment(reminder.time, format))
-      setForecast(reminder.forecast)
+      setWeather(reminder.weather)
     }
   }, [reminder]);
 
-  function createReminder() {
-    return {
-      title, color: color, date: moment(date), city, id: id || Math.random(), time
-    };
-  }
 
   function deleteReminder() {
+    setButtonEnabled(false)
     if (id) {
       dispatch({
         type: 'DELETE', param: id
       })
       navigate('/')
     }
+    setButtonEnabled(true)
+  }
+
+  function handleSave(reminder) {
+    dispatch({
+      type: reminder.originalId ? 'EDIT' : 'INSERT', param: reminder
+    });
+    navigate('/');
   }
 
   function saveReminder() {
-    // axios.get(`https://api.openweathermap.org/data/2.5/forecast/daily?q=${city}&cnt=16&appid=dea6343c2b0c8532caaa0a5814866aa3`)
-    //   .then(res => {
-    //     console.log(res);
-    //   })
-
-    if (id) {
-      dispatch({
-        type: 'EDIT', param: createReminder()
-      })
+    setButtonEnabled(false)
+    let errors = checkReminder(title, city)
+    if (errors.length > 0) {
+      setErrors(errors)
+      setButtonEnabled(true)
     } else {
+      let reminder = getReminder(title, city, color, date, id, time)
 
-      dispatch({
-        type: 'INSERT', param: createReminder()
-      })
+      axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.REACT_APP_WEATHER_API_ID}`)
+        .then(res => {
+          if (res.status == 200) {
+            reminder.weather = res.data.weather[0].main
+          }
+          handleSave(reminder);
+        })
+        .catch(res => {
+          handleSave(reminder);
+        })
+
     }
-    navigate('/')
   }
-
-
 
   return (
     <div className='reminder-panel'>
@@ -83,9 +92,16 @@ const Reminder = () => {
 
         <h2>{id ? "Edit Reminder" : "New Reminder"}</h2>
         <label>Description</label>
-        <Input onChange={(event) => setTitle(event.target.value)} value={title} placeholder="Reminder's description" />
+        <Input className={`${errors.find(error => error.field == 'title') && 'error-field'}`} max={30} onChange={(event) => setTitle(event.target.value)} value={title} placeholder="Reminder's description" />
+        {errors.find(error => error.field == 'title') &&
+          <span>{errors.find(error => error.field == 'title').error}</span>}
         <label>City</label>
-        <Input onChange={(event) => setCity(event.target.value)} value={city} placeholder="Reminder's city" />
+        <Input className={`${errors.find(error => error.field == 'city') && 'error-field'}`} onChange={(event) => setCity(event.target.value)} value={city} placeholder="Reminder's city" />
+        {errors.find(error => error.field == 'city') &&
+          <span>{errors.find(error => error.field == 'city').error}</span>}
+        {
+          weather && <span>Weather: {reminder.weather}</span>
+        }
         <label>Date</label>
         <DatePicker onChange={(date) => setDate(date)} value={date} />
         <TimePicker value={time} format={format} onChange={(time) => setTime(time)} />
@@ -98,10 +114,10 @@ const Reminder = () => {
       </div>
       <div className='buttons-panel'>
 
-        <button className='button back-button' onClick={() => navigate('/')}>Back to Calendar</button>
-        <button className='button save-button' onClick={saveReminder} >Save Reminder</button>
+        <button disabled={!buttonEnabled} className='button back-button' onClick={() => navigate('/')}>Back to Calendar</button>
+        <button disabled={!buttonEnabled} className='button save-button' onClick={saveReminder} >Save Reminder</button>
         {id &&
-          <button className='button delete-button' onClick={deleteReminder} >Delete Reminder</button>
+          <button disabled={!buttonEnabled} className='button delete-button' onClick={deleteReminder} >Delete Reminder</button>
         }
       </div>
     </div>

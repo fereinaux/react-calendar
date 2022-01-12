@@ -5,7 +5,7 @@ import {
   useNavigate
 } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
-import { Sun, Umbrella, CloudRain, CloudLightning, CloudSnow, Trash2 } from 'react-feather';
+import { Sun, Cloud, CloudRain, CloudLightning, CloudSnow, Trash2 } from 'react-feather';
 
 function Calendar() {
   const dispatch = useDispatch()
@@ -28,22 +28,18 @@ function Calendar() {
       setMonth(month + inc)
   }
 
-  function getIcon(forecast) {
-    switch (forecast) {
-      case 'cloud':
-      case 'cloudly_day':
-      case 'cloudly_night':
-        return <CloudRain size={12} />
-      case 'storm':
+  function getIcon(weather) {
+    switch (weather) {
+      case 'Clouds':
+        return <Cloud size={12} />
+      case 'Thunderstorm':
         return <CloudLightning size={12} />
-      case 'snow':
-      case 'hail':
+      case 'Snow':
         return <CloudSnow size={12} />
-      case 'rain':
-      case 'fog':
-        return <Umbrella size={12} />
-      case 'clear_day':
-      case 'clear_night':
+      case 'Rain':
+      case 'Drizzle':
+        return <CloudRain size={12} />
+      case 'Clear':
         return <Sun size={12} />
       default:
         break
@@ -58,9 +54,9 @@ function Calendar() {
 
         filteredReminders
           .map(reminder => {
-            return <li className='reminder'>
+            return <li key={reminder.id} className='reminder'>
               <span onClick={() => navigate(`/reminder/${reminder.id}`)} style={{ backgroundColor: reminder.color.hex }}>
-                {reminder.title} {getIcon(reminder.forecast)}
+                {reminder.title} {getIcon(reminder.weather)}
               </span>
             </li>
           })
@@ -117,7 +113,7 @@ function Calendar() {
 
               {daysOfMonth.filter(day => day.weekday() == index).map((day, indexMonth) => {
 
-                return <React.Fragment>
+                return <React.Fragment key={`${day.weekday}${indexMonth}`}>
                   {indexMonth == 0 && day.date() > 1 && daysOfMonth[0].weekday() > day.weekday()
                     && <li className='month-day not-month'></li>}
                   <li className={`month-day add ${[0, 6].includes(day.weekday()) && 'weekend'}`} key={`month-day-${indexMonth}`}>

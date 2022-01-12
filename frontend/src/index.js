@@ -23,6 +23,7 @@ function reducer(state = [], action) {
       return sortState(state)
     case 'INSERT':
       state.push(param)
+  
       return sortState(state)
     case 'DELETE':
       let removeIndex = state.findIndex(reminder => reminder.id == param)
