@@ -30,8 +30,8 @@ const Reminder = () => {
   const [buttonEnabled, setButtonEnabled] = useState(true);
 
   useEffect(() => {
-    setReminder(reminders.find(reminder => reminder.id == id))
-  }, [id]);
+    setReminder(reminders.find(reminder => reminder.id === id))
+  }, [id, reminders]);
 
   useEffect(() => {
     if (reminder && reminder.id) {
@@ -74,7 +74,7 @@ const Reminder = () => {
 
       axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.REACT_APP_WEATHER_API_ID}`)
         .then(res => {
-          if (res.status == 200) {
+          if (res.status === 200) {
             reminder.weather = res.data.weather[0].main
           }
           handleSave(reminder);
@@ -92,13 +92,13 @@ const Reminder = () => {
 
         <h2>{id ? "Edit Reminder" : "New Reminder"}</h2>
         <label>Description</label>
-        <Input className={`${errors.find(error => error.field == 'title') && 'error-field'}`} max={30} onChange={(event) => setTitle(event.target.value)} value={title} placeholder="Reminder's description" />
-        {errors.find(error => error.field == 'title') &&
-          <span>{errors.find(error => error.field == 'title').error}</span>}
+        <Input className={`${errors.find(error => error.field === 'title') && 'error-field'}`} max={30} onChange={(event) => setTitle(event.target.value)} value={title} placeholder="Reminder's description" />
+        {errors.find(error => error.field === 'title') &&
+          <span>{errors.find(error => error.field === 'title').error}</span>}
         <label>City</label>
-        <Input className={`${errors.find(error => error.field == 'city') && 'error-field'}`} onChange={(event) => setCity(event.target.value)} value={city} placeholder="Reminder's city" />
-        {errors.find(error => error.field == 'city') &&
-          <span>{errors.find(error => error.field == 'city').error}</span>}
+        <Input className={`${errors.find(error => error.field === 'city') && 'error-field'}`} onChange={(event) => setCity(event.target.value)} value={city} placeholder="Reminder's city" />
+        {errors.find(error => error.field === 'city') &&
+          <span>{errors.find(error => error.field === 'city').error}</span>}
         {
           weather && <span>Weather: {reminder.weather}</span>
         }

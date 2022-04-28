@@ -18,7 +18,7 @@ function reducer(state = [], action) {
   let param = action.param;
   switch (action.type) {
     case 'EDIT':
-      let editIndex = state.findIndex(reminder => reminder.id == param.id)
+      let editIndex = state.findIndex(reminder => reminder.id === param.id)
       state[editIndex] = param
       return sortState(state)
     case 'INSERT':
@@ -26,7 +26,7 @@ function reducer(state = [], action) {
   
       return sortState(state)
     case 'DELETE':
-      let removeIndex = state.findIndex(reminder => reminder.id == param)
+      let removeIndex = state.findIndex(reminder => reminder.id === param)
       state.splice(removeIndex, 1)
       return sortState(state)
     case 'DELETEBYDAY':      
