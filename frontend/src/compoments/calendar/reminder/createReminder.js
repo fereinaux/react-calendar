@@ -2,22 +2,22 @@ import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import { DatePicker, TimePicker, Input } from 'antd';
 import "react-day-picker/lib/style.css";
-import './reminder.css'
+import './createReminder.css'
 import {
   useParams,
   useNavigate
 } from "react-router-dom";
 import { SketchPicker } from 'react-color'
 import { useDispatch, useSelector } from 'react-redux'
-import axios from 'axios';
-import { checkReminder, getReminder } from './functions'
+import { getWeahter } from '../../utils/api'
+import { checkReminder, getReminder } from '../../utils/functions'
 
-const Reminder = () => {
+export default function CreateReminder() {
   const format = 'HH:mm';
   const dispatch = useDispatch()
   const navigate = useNavigate();
   const { id } = useParams();
-  let reminders = useSelector(state => state)
+  let reminders = useSelector(state => state.reminders)
   const [reminder, setReminder] = useState({});
 
   const [date, setDate] = useState(moment(new Date(), 'YYYY-MM-DD'));
@@ -29,7 +29,7 @@ const Reminder = () => {
   const [errors, setErrors] = useState([]);
   const [buttonEnabled, setButtonEnabled] = useState(true);
 
-  useEffect(() => {
+  useEffect(() => {    
     setReminder(reminders.find(reminder => reminder.id === id))
   }, [id, reminders]);
 
@@ -63,7 +63,7 @@ const Reminder = () => {
     navigate('/');
   }
 
-  function saveReminder() {
+  async function saveReminder() {
     setButtonEnabled(false)
     let errors = checkReminder(title, city)
     if (errors.length > 0) {
@@ -72,17 +72,13 @@ const Reminder = () => {
     } else {
       let reminder = getReminder(title, city, color, date, id, time)
 
-      axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.REACT_APP_WEATHER_API_ID}`)
-        .then(res => {
-          if (res.status === 200) {
-            reminder.weather = res.data.weather[0].main
-          }
-          handleSave(reminder);
-        })
-        .catch(res => {
-          handleSave(reminder);
-        })
+      const wheatherResult = await getWeahter(city)
 
+      if (wheatherResult.succes) {
+        reminder.weather = wheatherResult.weather
+      }
+
+      handleSave(reminder)
     }
   }
 
@@ -124,6 +120,5 @@ const Reminder = () => {
   );
 }
 
-export default Reminder;
 
 

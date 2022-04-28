@@ -1,0 +1,46 @@
+
+.change-date:first-of-type {
+  margin-left: auto;
+  margin-right: 4px;
+}
+
+.change-date:last-of-type {
+  margin-left: 4px;
+  margin-right: auto;
+}
+
+.change-date {
+  display: flex;
+  text-align: center;  
+  margin-top: 5px;
+  background-color: brown;
+  width: 20%;  
+  color: white;
+  height: 50px;
+  padding-top: 10px;
+}
+
+.change-date h2 {
+  color: white;
+  margin-top: 0;
+}
+
+.change-date span.new-reminder {
+  margin: auto !important;
+  margin-bottom: 10px !important;
+}
+
+.change-date span {
+  cursor: pointer;
+  line-height:30px;
+  vertical-align: middle;
+  font-size: 30px;
+  font-weight: 900;
+  margin-right: auto;
+  margin-left: 20px;
+}
+
+.change-date span:first-of-type {
+  margin-left: auto;
+  margin-right: 20px;
+}
