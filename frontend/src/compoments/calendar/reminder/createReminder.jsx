@@ -9,7 +9,7 @@ import {
 } from 'react-router-dom';
 import { SketchPicker } from 'react-color';
 import { useDispatch, useSelector } from 'react-redux';
-import { getWeahter } from '../../utils/api';
+import getWeahter from '../../utils/api';
 import { checkReminder, getReminder } from '../../utils/functions';
 
 export default function CreateReminder() {

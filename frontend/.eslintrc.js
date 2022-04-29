@@ -2,6 +2,7 @@ module.exports = {
   env: {
     browser: true,
     es2021: true,
+    jest: true,
   },
   extends: [
     'plugin:react/recommended',
@@ -18,6 +19,8 @@ module.exports = {
     'react',
   ],
   rules: {
+    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
+    'import/no-cycle': ['error', { maxDepth: '∞' }],
     'jsx-a11y/label-has-associated-control': ['error', {
       required: {
         some: ['nesting', 'id'],

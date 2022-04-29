@@ -5,18 +5,18 @@ import { useDispatch, useSelector } from 'react-redux';
 export default function YearButton() {
   const { year } = useSelector((state) => state.calendar);
   const dispatch = useDispatch();
-  function setYear(year) {
+  function setYear(lYear) {
     dispatch({
       type: 'YEAR',
-      param: year,
+      param: lYear,
     });
   }
   return (
     <div className="change-date">
       <span> Year </span>
-      <span onClick={() => setYear(year - 1)}> &lt; &lt; </span>
+      <span role="button" onKeyDown={() => setYear(year - 1)} tabIndex={0} onClick={() => setYear(year - 1)}> &lt; &lt; </span>
       <h2>{year}</h2>
-      <span onClick={() => setYear(year + 1)}> &gt; &gt; </span>
+      <span role="button" onKeyDown={() => setYear(year + 1)} tabIndex={0} onClick={() => setYear(year + 1)}> &gt; &gt; </span>
     </div>
   );
 }

@@ -24,12 +24,15 @@ export default function Reminder({ reminder }) {
       case 'Clear':
         return <Sun size={12} />;
       default:
-        break;
+        return null;
     }
   };
   return (
     <li key={reminder.id} className="reminder">
       <span
+        role="button"
+        tabIndex={0}
+        onKeyDown={() => navigate(`/reminder/${reminder.id}`)}
         onClick={() => navigate(`/reminder/${reminder.id}`)}
         style={{ backgroundColor: reminder.color.hex }}
       >
