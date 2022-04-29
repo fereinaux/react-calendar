@@ -1,18 +1,15 @@
 import React from 'react';
-import "./calendar.css";
+import './calendar.css';
 import WeekDays from './days/weekDays';
 import Buttons from './buttons/buttons';
 
-function Calendar() { 
+function Calendar() {
   return (
-    <React.Fragment>
-      <Buttons/>
-      <WeekDays/>
-    </React.Fragment>
+    <>
+      <Buttons />
+      <WeekDays />
+    </>
   );
 }
 
 export default Calendar;
-
-
-

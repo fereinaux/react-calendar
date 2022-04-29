@@ -1,40 +1,42 @@
 import React from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import {
   Sun,
   Cloud,
   CloudRain,
   CloudLightning,
   CloudSnow,
-} from "react-feather";
+} from 'react-feather';
 
-export default function Reminder({reminder}) {  
+export default function Reminder({ reminder }) {
   const navigate = useNavigate();
   const getIcon = (weather) => {
     switch (weather) {
-      case "Clouds":
+      case 'Clouds':
         return <Cloud size={12} />;
-      case "Thunderstorm":
+      case 'Thunderstorm':
         return <CloudLightning size={12} />;
-      case "Snow":
+      case 'Snow':
         return <CloudSnow size={12} />;
-      case "Rain":
-      case "Drizzle":
+      case 'Rain':
+      case 'Drizzle':
         return <CloudRain size={12} />;
-      case "Clear":
+      case 'Clear':
         return <Sun size={12} />;
       default:
         break;
     }
-  }
+  };
   return (
     <li key={reminder.id} className="reminder">
       <span
         onClick={() => navigate(`/reminder/${reminder.id}`)}
         style={{ backgroundColor: reminder.color.hex }}
       >
-        {reminder.title} {getIcon(reminder.weather)}
+        {reminder.title}
+        {' '}
+        {getIcon(reminder.weather)}
       </span>
     </li>
-  )
+  );
 }

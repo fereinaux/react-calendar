@@ -1,88 +1,90 @@
 import { createStore } from 'redux';
 import moment from 'moment';
 
-const month = moment(new Date()).month()
-const year = moment(new Date()).year()
-const daysInMonth = moment().daysInMonth(month)
+const month = moment(new Date()).month();
+const year = moment(new Date()).year();
+const daysInMonth = moment().daysInMonth(month);
 
-const getDaysInMonth = (year, month) => {
-  return moment(`${year}-${month + 1}`, 'YYYY-MM').daysInMonth()
-}
+const getDaysInMonth = (lYear, lMonth) => moment(`${lYear}-${lMonth + 1}`, 'YYYY-MM').daysInMonth();
 
-const getDaysOfMonth = (month, year, daysInMonth) => {
-  let daysOfMonth = [];
-  for (let i = 0; i < daysInMonth; i++) {
-    daysOfMonth.push(moment(`${year}-${month + 1}-${i + 1}`));
+const getDaysOfMonth = (lMonth, lYear, lDaysInMonth) => {
+  const daysOfMonth = [];
+  for (let i = 0; i < lDaysInMonth; i += 1) {
+    daysOfMonth.push(moment(`${lYear}-${lMonth + 1}-${i + 1}`));
   }
   return daysOfMonth;
-}
+};
 
 const initialState = {
-  reminders: [], calendar: {
-    month: month,
-    year: year,
+  reminders: [],
+  calendar: {
+    month,
+    year,
     daysInMonth: getDaysInMonth(year, month),
     daysOfMonth: getDaysOfMonth(month, year, daysInMonth),
     daysOfWeek: [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ]
-  }
-}
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+    ],
+  },
+};
 
 function sortState(state) {
   return {
-    ...state, reminders: state.reminders.sort((a, b) => {
-      return moment(a.time).format('HHmm') - moment(b.time).format('HHmm')
-    })
-  }
+    ...state,
+    reminders: state.reminders.sort((a, b) => moment(a.time).format('HHmm') - moment(b.time).format('HHmm')),
+  };
 }
 
-function calendar(state = initialState, action) {
-  let param = action.param;
-  let daysInMonth;
+function calendar(state = initialState, action = { type: '', param: {} }) {
+  const { param } = action;
+  let lDaysInMonth;
   switch (action.type) {
     case 'MONTH':
-      daysInMonth = getDaysInMonth(state.calendar.year, action.param);
+      lDaysInMonth = getDaysInMonth(state.calendar.year, param);
       return {
         ...state,
         calendar: {
           ...state.calendar,
-          month: action.param,
-          daysInMonth: daysInMonth,
-          daysOfMonth: getDaysOfMonth(action.param, state.calendar.year, daysInMonth)
-        }
-      }
+          month: param,
+          daysInMonth,
+          daysOfMonth: getDaysOfMonth(param, state.calendar.year, lDaysInMonth),
+        },
+      };
     case 'YEAR':
-      daysInMonth = getDaysInMonth(action.param, state.calendar.month);
+      lDaysInMonth = getDaysInMonth(param, state.calendar.month);
       return {
         ...state,
         calendar: {
           ...state.calendar,
-          year: action.param,
-          daysOfMonth: getDaysOfMonth(state.calendar.month, action.param, daysInMonth)
-        }
-      }
-    case 'EDIT':
-      let editIndex = state.reminders.findIndex(reminder => reminder.id === param.id)
-      state.reminders[editIndex] = param
-      return sortState(state)
+          year: param,
+          daysOfMonth: getDaysOfMonth(state.calendar.month, param, lDaysInMonth),
+        },
+      };
+    case 'EDIT': {
+      const editIndex = state.reminders.findIndex(
+        (reminder) => Number(reminder.id) === Number(param.id),
+      );
+      return sortState({ ...state, reminders: state.reminders.splice(editIndex, 1, param) });
+    }
+
     case 'INSERT':
-      state.reminders.push(param)
-      return sortState(state)
-    case 'DELETE':
-      let removeIndex = state.reminders.findIndex(reminder => reminder.id === param)
-      state.reminders.splice(removeIndex, 1)
-      return sortState(state)
+      state.reminders.push(param);
+      return sortState(state);
+    case 'DELETE': {
+      const removeIndex = state.reminders.findIndex((reminder) => reminder.id === param);
+      state.reminders.splice(removeIndex, 1);
+      return sortState(state);
+    }
     case 'DELETEBYDAY':
-      return sortState({ ...state, reminders: state.reminders.filter(reminder => reminder.date.format('YYYYMMDD') !== param.format('YYYYMMDD')) })
+      return sortState({ ...state, reminders: state.reminders.filter((reminder) => reminder.date.format('YYYYMMDD') !== param.format('YYYYMMDD')) });
     default:
-      return sortState(state)
+      return sortState(state);
   }
 }
 

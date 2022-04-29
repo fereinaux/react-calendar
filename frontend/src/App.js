@@ -1,15 +1,14 @@
 import './App.css';
-import Calendar from './compoments/calendar/calendar';
-import CreateReminder from './compoments/calendar/reminder/createReminder';
 import {
   BrowserRouter,
   Route,
   Routes,
-} from "react-router-dom";
+} from 'react-router-dom';
+import Calendar from './compoments/calendar/calendar';
+import CreateReminder from './compoments/calendar/reminder/createReminder';
 import 'antd/dist/antd.css';
 import { Provider } from 'react-redux';
 import store from './store';
-
 
 function App() {
   return (

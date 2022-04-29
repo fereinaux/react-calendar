@@ -11,6 +11,7 @@
     "feather-icons": "^4.28.0",
     "jest": "^21.2.1",
     "jest-cli": "^21.2.1",
+    "moment": "^2.29.3",
     "react": "^17.0.2",
     "react-color": "^2.19.3",
     "react-day-picker": "^7.4.10",
@@ -19,6 +20,7 @@
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
+    "redux": "^4.2.0",
     "web-vitals": "^2.1.2"
   },
   "scripts": {
@@ -27,9 +29,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "engines" : { 
-    "npm" : ">=6.14.11",
-    "node" : ">=14.16.1"
+  "engines": {
+    "npm": ">=6.14.11",
+    "node": ">=14.16.1"
   },
   "eslintConfig": {
     "extends": [
@@ -52,6 +54,12 @@
   "devDependencies": {
     "enzyme": "^2.9.1",
     "enzyme-adapter-react-16": "^1.15.6",
+    "eslint": "^8.14.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-hooks": "^4.5.0",
     "jest-watch-typeahead": "^0.6.5"
   }
 }
