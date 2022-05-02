@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 export default function MonthButton() {
   const dispatch = useDispatch();
   const { year, month } = useSelector((state) => state.calendar);
-  function handleMonth(inc) {
+  const handleMonth = (inc) => {
     if (month + inc > 11) {
       dispatch({
         type: 'MONTH',
@@ -30,14 +30,42 @@ export default function MonthButton() {
         param: month + inc,
       });
     }
-  }
+  };
+
+  const subtractMonth = () => {
+    handleMonth(-1);
+  };
+
+  const addMonth = () => {
+    handleMonth(1);
+  };
 
   return (
     <div className="change-date">
       <span> Month </span>
-      <span role="button" tabIndex={0} onKeyDown={() => handleMonth(-1)} onClick={() => handleMonth(-1)}> &lt; &lt; </span>
+      <span
+        role="button"
+        tabIndex={0}
+        onKeyDown={subtractMonth}
+        onClick={subtractMonth}
+      >
+        {' '}
+        &lt; &lt;
+        {' '}
+
+      </span>
       <h2>{moment(`${year}-${month + 1}-1`).format('MMMM')}</h2>
-      <span role="button" tabIndex={0} onKeyDown={() => handleMonth(1)} onClick={() => handleMonth(1)}> &gt; &gt; </span>
+      <span
+        role="button"
+        tabIndex={0}
+        onKeyDown={addMonth}
+        onClick={addMonth}
+      >
+        {' '}
+        &gt; &gt;
+        {' '}
+
+      </span>
     </div>
   );
 }

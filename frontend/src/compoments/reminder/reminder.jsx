@@ -27,13 +27,16 @@ export default function Reminder({ reminder }) {
         return null;
     }
   };
+  const goToReminder = () => {
+    navigate(`/reminder/${reminder.id}`);
+  };
   return (
     <li key={reminder.id} className="reminder">
       <span
         role="button"
         tabIndex={0}
-        onKeyDown={() => navigate(`/reminder/${reminder.id}`)}
-        onClick={() => navigate(`/reminder/${reminder.id}`)}
+        onKeyDown={goToReminder}
+        onClick={goToReminder}
         style={{ backgroundColor: reminder.color.hex }}
       >
         {reminder.title}

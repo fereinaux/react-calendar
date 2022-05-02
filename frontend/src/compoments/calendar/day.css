@@ -27,15 +27,14 @@
   top: 30px;
 }
 
-
 .month-day.weekend  span {
   color: rgb(23, 69, 112);
 }
 
-.month-day.not-month {
-  background-color: rgb(189, 178, 165);
-}
-
 .month-day.weekend {
   background-color: rgb(197, 155, 99);
+}
+
+.month-day.not-month {
+  background-color: rgb(189, 178, 165);
 }

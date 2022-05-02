@@ -6,8 +6,8 @@ import {
   Routes,
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import Calendar from './compoments/calendar/calendar';
-import CreateReminder from './compoments/calendar/reminder/createReminder';
+import Calendar from './compoments/calendar';
+import CreateReminder from './compoments/reminder/create';
 import 'antd/dist/antd.css';
 import store from './store';
 

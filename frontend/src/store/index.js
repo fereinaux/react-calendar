@@ -70,14 +70,16 @@ function calendar(state = initialState, action = { type: '', param: {} }) {
       const editIndex = state.reminders.findIndex(
         (reminder) => Number(reminder.id) === Number(param.id),
       );
-      return sortState({ ...state, reminders: state.reminders.splice(editIndex, 1, param) });
+      state.reminders.splice(editIndex, 1, param);
+      return sortState(state);
     }
-
     case 'INSERT':
       state.reminders.push(param);
       return sortState(state);
     case 'DELETE': {
-      const removeIndex = state.reminders.findIndex((reminder) => reminder.id === param);
+      const removeIndex = state.reminders.findIndex(
+        (reminder) => Number(reminder.id) === Number(param),
+      );
       state.reminders.splice(removeIndex, 1);
       return sortState(state);
     }

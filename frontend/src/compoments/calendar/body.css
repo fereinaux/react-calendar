@@ -1,5 +1,4 @@
-.week-day {
- 
+.week-day { 
   width: 14%;
   margin-left: auto;
   margin-right: auto;
@@ -13,4 +12,8 @@
   background-color: brown;
   margin-top: 5px;
   margin-bottom: 0;
+}
+
+.reminders {
+  padding: 2px !important;
 }

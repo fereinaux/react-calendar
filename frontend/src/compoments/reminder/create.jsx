@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import { DatePicker, TimePicker, Input } from 'antd';
 import 'react-day-picker/lib/style.css';
-import './createReminder.css';
+import './create.css';
 import {
   useParams,
   useNavigate,
 } from 'react-router-dom';
 import { SketchPicker } from 'react-color';
 import { useDispatch, useSelector } from 'react-redux';
-import getWeahter from '../../utils/api';
-import { checkReminder, getReminder } from '../../utils/functions';
+import getWeahter from '../utils/api';
+import { checkReminder, getReminder } from '../utils/functions';
 
 export default function CreateReminder() {
   const format = 'HH:mm';
@@ -80,17 +80,52 @@ export default function CreateReminder() {
 
   return (
     <div className="reminder-panel">
-      <div className="fields" style={{ backgroundColor: color.hex }}>
-
+      <div
+        className="fields"
+        style={{ backgroundColor: color.hex }}
+      >
         <h2>{id ? 'Edit Reminder' : 'New Reminder'}</h2>
+
         <label htmlFor="title">Description</label>
-        <Input id="title" className={`${errors.find((error) => error.field === 'title') && 'error-field'}`} max={30} onChange={(event) => setTitle(event.target.value)} value={title} placeholder="Reminder's description" />
-        {errors.find((error) => error.field === 'title')
-          && <span>{errors.find((error) => error.field === 'title').error}</span>}
+        <Input
+          id="title"
+          className={`${errors.find((error) => error.field === 'title') && 'error-field'}`}
+          max={30}
+          onChange={(event) => setTitle(event.target.value)}
+          value={title}
+          placeholder="Reminder's description"
+        />
+        {errors.find(
+          (error) => error.field === 'title',
+        )
+          && (
+          <span>
+            {errors.find(
+              (error) => error.field === 'title',
+            ).error}
+          </span>
+          )}
+
         <label htmlFor="city">City</label>
-        <Input id="city" className={`${errors.find((error) => error.field === 'city') && 'error-field'}`} onChange={(event) => setCity(event.target.value)} value={city} placeholder="Reminder's city" />
-        {errors.find((error) => error.field === 'city')
-          && <span>{errors.find((error) => error.field === 'city').error}</span>}
+        <Input
+          id="city"
+          className={`${errors.find(
+            (error) => error.field === 'city',
+          ) && 'error-field'}`}
+          onChange={(event) => setCity(event.target.value)}
+          value={city}
+          placeholder="Reminder's city"
+        />
+        {errors.find(
+          (error) => error.field === 'city',
+        )
+          && (
+          <span>
+            {errors.find(
+              (error) => error.field === 'city',
+            ).error}
+          </span>
+          )}
         {
           weather && (
             <span>
@@ -99,9 +134,18 @@ export default function CreateReminder() {
             </span>
           )
         }
+
         <label htmlFor="date">Date</label>
-        <DatePicker id="date" onChange={(lDate) => setDate(lDate)} value={date} />
-        <TimePicker value={time} format={format} onChange={(lTime) => setTime(lTime)} />
+        <DatePicker
+          id="date"
+          onChange={(lDate) => setDate(lDate)}
+          value={date}
+        />
+        <TimePicker
+          value={time}
+          format={format}
+          onChange={(lTime) => setTime(lTime)}
+        />
 
         <label htmlFor="color">Color</label>
         <SketchPicker
@@ -110,12 +154,35 @@ export default function CreateReminder() {
           onChangeComplete={(lColor) => { setColor(lColor); }}
         />
       </div>
-      <div className="buttons-panel">
 
-        <button type="button" disabled={!buttonEnabled} className="button back-button" onClick={() => navigate('/')}>Back to Calendar</button>
-        <button type="button" disabled={!buttonEnabled} className="button save-button" onClick={saveReminder}>Save Reminder</button>
+      <div className="buttons-panel">
+        <button
+          type="button"
+          disabled={!buttonEnabled}
+          className="button back-button"
+          onClick={() => navigate('/')}
+        >
+          Back to Calendar
+        </button>
+        <button
+          type="button"
+          disabled={!buttonEnabled}
+          className="button save-button"
+          onClick={saveReminder}
+        >
+          Save Reminder
+        </button>
         {id
-          && <button type="button" disabled={!buttonEnabled} className="button delete-button" onClick={deleteReminder}>Delete Reminder</button>}
+          && (
+          <button
+            type="button"
+            disabled={!buttonEnabled}
+            className="button delete-button"
+            onClick={deleteReminder}
+          >
+            Delete Reminder
+          </button>
+          )}
       </div>
     </div>
   );
